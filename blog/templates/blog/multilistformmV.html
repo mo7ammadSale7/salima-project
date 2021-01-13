@@ -1,0 +1,785 @@
+{% load static %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Document</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="{% static 'blog/js/fontawesome-all.min.js' %}"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    <style>
+        /*custom font*/
+        @import url(https://fonts.googleapis.com/css?family=Cairo&display=swap);
+
+        /*basic reset*/
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            height: 100%;
+            background: #c2dce9;
+            /* fallback for old browsers */
+            background: -webkit-linear-gradient(to left, #6441A5, #2a0845);
+            /* Chrome 10-25, Safari 5.1-6 */
+        }
+
+        body {
+            font-family: "Cairo", sans-serif;
+            background: transparent;
+            direction: rtl;
+        }
+
+        dl,
+        ol,
+        ul,
+        .errorlist {
+            margin-top: 0;
+            margin-bottom: 1rem;
+            color: red;
+            font-style: italic;
+            list-style: none;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .error {
+            color: red;
+            font-style: italic;
+        }
+
+        .glass {
+            position: absolute;
+            border: 3px solid #000;
+            border-radius: 50%;
+            cursor: none;
+            /*Set the size of the magnifier glass:*/
+            width: 100px;
+            height: 100px;
+        }
+
+        .slider {
+            margin-top: 70px;
+        }
+
+        .navbar {
+
+            background: #384ceb;
+            /* position: fixed; */
+            direction: rtl !important;
+            width: 100%;
+            border-bottom: 1px solid #ffffff;
+            z-index: 1000;
+        }
+
+        .navbar:hover {
+            background: #c2dce9;
+            transition: 1s;
+        }
+
+        .navbar .dropdown-menu {
+            background-color: #384ceb;
+            transition: 1s ease-in-out;
+        }
+
+        .navbar .dropdown-menu:hover {
+            background: #c2dce9;
+        }
+
+        .navbar .dropdown-menu .dropdown-item {
+            color: #ffffff;
+        }
+
+        .navbar .dropdown-menu .dropdown-item:hover {
+            background: transparent;
+            transition: 1s ease-in-out;
+            color: #384ceb;
+        }
+
+        .navbar .navbar-collapse {
+            align-items: center;
+            width: auto;
+        }
+
+        .navbar .navbar-toggler {
+            background-color: #ffffff;
+            border: 1px solid #384ceb;
+            box-shadow: inset;
+            outline: none !important;
+            box-shadow: none;
+        }
+
+        .navbar .navbar-toggler .icon {
+            color: #384ceb;
+        }
+
+        .navbar .navbar-nav .nav-link {
+            color: #ffffff;
+            transition: 1s ease-in-out;
+            font-weight: 400;
+            text-align: right;
+        }
+
+        .navbar .navbar-nav .nav-link:hover {
+            color: #384ceb;
+        }
+
+        /*form styles*/
+        #msform {
+            text-align: center;
+            position: relative;
+            margin-top: 30px;
+        }
+
+        label {
+            display: inline-block;
+            max-width: 100%;
+            margin-top: 15px;
+            font-weight: 700;
+            text-align: right;
+            float: right;
+        }
+
+        #msform fieldset {
+            background: white;
+            border: 0 none;
+            border-radius: 0px;
+            box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+            padding: 20px 30px;
+            box-sizing: border-box;
+            width: 100%;
+            margin: 0 3%;
+
+            /*stacking fieldsets above each other*/
+            position: relative;
+        }
+
+        /*Hide all except first fieldset*/
+        #msform fieldset:not(:first-of-type) {
+            display: none;
+        }
+
+        /*inputs*/
+        #msform input,
+        #msform textarea {
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 0px;
+            margin-bottom: 10px;
+            width: 100%;
+            box-sizing: border-box;
+            font-family: montserrat;
+            color: #2C3E50;
+            font-size: 13px;
+        }
+
+        #msform input:focus,
+        #msform textarea:focus {
+            -moz-box-shadow: none !important;
+            -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+            border: 1px solid #ee0979;
+            outline-width: 0;
+            transition: All 0.5s ease-in;
+            -webkit-transition: All 0.5s ease-in;
+            -moz-transition: All 0.5s ease-in;
+            -o-transition: All 0.5s ease-in;
+        }
+
+        /*buttons*/
+        #msform .action-button {
+            width: 100px;
+            background: #ee0979;
+            font-weight: bold;
+            color: white;
+            border: 0 none;
+            border-radius: 25px;
+            cursor: pointer;
+            padding: 10px 5px;
+            margin: 10px 5px;
+        }
+
+        #msform .action-button:hover,
+        #msform .action-button:focus {
+            box-shadow: 0 0 0 2px white, 0 0 0 3px #ee0979;
+        }
+
+        #msform .action-button-previous {
+            width: 100px;
+            background: #C5C5F1;
+            font-weight: bold;
+            color: white;
+            border: 0 none;
+            border-radius: 25px;
+            cursor: pointer;
+            padding: 10px 5px;
+            margin: 10px 5px;
+        }
+
+        #msform .action-button-previous:hover,
+        #msform .action-button-previous:focus {
+            box-shadow: 0 0 0 2px white, 0 0 0 3px #C5C5F1;
+        }
+
+        /*headings*/
+        .fs-title {
+            font-size: 18px;
+            text-transform: uppercase;
+            color: #2C3E50;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+
+        .fs-subtitle {
+            font-weight: normal;
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        /*progressbar*/
+        #progressbar {
+            margin-bottom: 30px;
+            overflow: hidden;
+            /*CSS counters to number the steps*/
+            counter-reset: step;
+        }
+
+        #progressbar li {
+            list-style-type: none;
+            color: white;
+            text-transform: uppercase;
+            font-size: 9px;
+            width: 33.33%;
+            float: left;
+            position: relative;
+            letter-spacing: 1px;
+        }
+
+        #progressbar li:before {
+            content: counter(step);
+            counter-increment: step;
+            width: 24px;
+            height: 24px;
+            line-height: 26px;
+            display: block;
+            font-size: 12px;
+            color: #333;
+            background: white;
+            border-radius: 25px;
+            margin: 0 auto 10px auto;
+        }
+
+        /*progressbar connectors*/
+        #progressbar li:after {
+            content: '';
+            width: 100%;
+            height: 2px;
+            background: white;
+            position: absolute;
+            left: -50%;
+            top: 9px;
+            z-index: -1;
+            /*put it behind the numbers*/
+        }
+
+        #progressbar li:first-child:after {
+            /*connector not needed before the first step*/
+            content: none;
+        }
+
+        /*marking active/completed steps green*/
+        /*The number of the step and the connector before it = green*/
+        #progressbar li.active:before,
+        #progressbar li.active:after {
+            background: #ee0979;
+            color: white;
+        }
+
+
+        /* Not relevant to this form */
+        .dme_link {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .dme_link a {
+            background: #FFF;
+            font-weight: bold;
+            color: #ee0979;
+            border: 0 none;
+            border-radius: 25px;
+            cursor: pointer;
+            padding: 5px 25px;
+            font-size: 12px;
+        }
+
+        .dme_link a:hover,
+        .dme_link a:focus {
+            background: #C5C5F1;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <header>
+        <!--Start Navbar-->
+        <nav class="navbar navbar-expand-lg  text-uppercase">
+            <div class="container">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="icon"><i class="fas fa-bars"></i></span>
+                </button>
+
+                <div class="collapse navbar-collapse justify-content-start" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-item nav-link active" href="{% url 'home' %}">الرئيسية <span
+                                class="sr-only">(current)</span>
+                        </a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle mx-5" href="#" id="navbarDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                التصنيفات
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                {% for category in category_list %}
+                                <a class="dropdown-item" href="/category/{{category.name}}">
+                                    {{category.name}}
+                                </a>
+                                {% endfor %}
+                            </div>
+                        </li>
+
+                        <!-- الجداول -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                انضم الينا
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                                <a class="dropdown-item" href="{% url 'formmV' %}">
+                                    الشركات الناشئة / الصغيرة
+                                </a>
+                                <a class="dropdown-item" href="{% url 'multilistformmV' %}">
+                                    فكره مشروع مبتكر
+                                </a>
+                                <a class="dropdown-item" href="{% url 'multilistformmBr' %}">
+                                    حاضنات الاعمال
+                                </a>
+
+                            </div>
+                        </li>
+                        <!-- الجداول -->
+
+                        <a class="nav-item nav-link" href="{% url 'adminapp' %}">الأدمن</a>
+
+
+                    </div>
+                </div>
+
+                <div class="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup">
+                    {% if user.is_authenticated %}
+                    <div class="navbar-nav">
+                        <a class="nav-item nav-link" href="{% url 'new_post' %}">تدوينة جديدة</a>
+                        <a class="nav-item nav-link" href="{% url 'allposts' %}"> جميــع الموضوعات</a>
+                        <a class="nav-item nav-link" href="{% url 'profile' %}">الملف الشخصي</a>
+                        <a class="nav-item nav-link" href="{% url 'logout' %}">تسجيل خروج</a>
+                        {% else %}
+                        <a class="nav-item nav-link" href="{% url 'login' %}">تسجيل دخول</a>
+                        <a class="nav-item nav-link" href="{% url 'register' %}">تسجيل</a>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="navbar-brand" href="#"><img class="img-fluid"
+                                src="{% static 'blog/images/alger.png' %}" width="70px" height="50px" alt="logo"></a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!--End Navbar-->
+    </header>
+
+    <!-- MultiStep Form -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="form-group">
+                {% if messages %}
+                {% for message in messages %}
+                {% if message.tags == 'success' %}
+                <div class="alert alert-success">{{ message }}</div>
+                {% elif message.tags == 'error' %}
+                <div class="alert alert-danger">{{ message }}</div>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6 mx-auto text-center">
+            <form id="msform" action="{% url 'multilistformmV_save' %}" method="post" enctype="multipart/form-data">
+                {{ form.non_field_errors }}
+                {% csrf_token %}
+                <h4 class="text-center">معلومات عن / فكره مشروع مبتكر</h4>
+                <h5 class="text-center">
+                    يهدف هذا القسم إلى توفير معلومات حول فكره مشروع مبتكر. يرجى أن تكون محددة وموجزة.
+                </h5>
+                <br>
+                <!-- progressbar -->
+                <ul id="progressbar">
+                    <li class="active">Personal Details</li>
+                    <li>Social Profiles</li>
+                    <li>Account Setup</li>
+                </ul>
+                <!-- fieldsets -->
+                <fieldset>
+                    <h2 class="fs-title">APPLICANT INFORMATION </h2>
+                    <h3 class="fs-subtitle">Tell us something more about you</h3>
+                    <label class="control-label" for="Tname">Name / اللقب * </label>
+                    <input class="tab" type="text" name="Tname" placeholder="اللقب " value="" />
+
+
+
+                    <label class="control-label" for="fname">First name / الاسم * </label>
+                    <input class="tab" type="text" name="fname" placeholder="First Name" />
+                    <label class="control-label" for="You_are"> You are / صفتك *</label>
+                    <select name="You_are" id="input_3_31" class="form-control input-md" aria-required="true"
+                        aria-invalid="false">
+                        <option value="Fondateur">
+                            <font style="vertical-align: inherit;">
+                                <font style="vertical-align: inherit;">Founder</font>
+                            </font>
+                        </option>
+                        <option value="Co-fondateur">
+                            <font style="vertical-align: inherit;">
+                                <font style="vertical-align: inherit;">Co-founder</font>
+                            </font>
+                        </option>
+                    </select>
+                    <label class="control-label" for="age"> Age / السن *</label>
+                    <input type="text" name="age" placeholder="السن" />
+                    <label class="control-label" for="wilaya"> الولاية</label>
+                    <select class="form-control input-md" id="wilaya" name="wilaya" required="True" value='data.wilaya'>
+                        <option value="0: أدرار" ng-reflect-ng-value="أدرار">1 - أدرار</option>
+                        <option value="1: الشلف" ng-reflect-ng-value="الشلف">2 - الشلف</option>
+                        <option value="2: الأغواط" ng-reflect-ng-value="الأغواط">3 - الأغواط
+                        </option>
+                        <option value="3: أم البواقي" ng-reflect-ng-value="أم البواقي">4 - أم
+                            البواقي</option>
+                        <option value="4: باتنة" ng-reflect-ng-value="باتنة">5 - باتنة</option>
+                        <option value="5: بجاية" ng-reflect-ng-value="بجاية">6 - بجاية</option>
+                        <option value="6: بسكرة" ng-reflect-ng-value="بسكرة">7 - بسكرة</option>
+                        <option value="7: بشار" ng-reflect-ng-value="بشار">8 - بشار</option>
+                        <option value="8: البليدة" ng-reflect-ng-value="البليدة">9 - البليدة
+                        </option>
+                        <option value="9: البويرة" ng-reflect-ng-value="البويرة">10 - البويرة
+                        </option>
+                        <option value="10: تمنراست" ng-reflect-ng-value="تمنراست">11 - تمنراست
+                        </option>
+                        <option value="11: تبسة" ng-reflect-ng-value="تبسة">12 - تبسة</option>
+                        <option value="12: تلمسان" ng-reflect-ng-value="تلمسان">13 - تلمسان</option>
+                        <option value="13: تيارت" ng-reflect-ng-value="تيارت">14 - تيارت</option>
+                        <option value="14: تيزي وزو" ng-reflect-ng-value="تيزي وزو">15 - تيزي وزو
+                        </option>
+                        <option value="15: الجزائر" ng-reflect-ng-value="الجزائر">16 - الجزائر
+                        </option>
+                        <option value="16: الجلفة" ng-reflect-ng-value="الجلفة">17 - الجلفة</option>
+                        <option value="17: جيجل" ng-reflect-ng-value="جيجل">18 - جيجل</option>
+                        <option value="18: سطيف" ng-reflect-ng-value="سطيف">19 - سطيف</option>
+                        <option value="19: سعيدة" ng-reflect-ng-value="سعيدة">20 - سعيدة</option>
+                        <option value="20: سكيكدة" ng-reflect-ng-value="سكيكدة">21 - سكيكدة</option>
+                        <option value="21: سيدي بلعباس" ng-reflect-ng-value="سيدي بلعباس">22 - سيدي
+                            بلعباس</option>
+                        <option value="22: عنابة" ng-reflect-ng-value="عنابة">23 - عنابة</option>
+                        <option value="23: قالمة" ng-reflect-ng-value="قالمة">24 - قالمة</option>
+                        <option value="24: قسنطينة" ng-reflect-ng-value="قسنطينة">25 - قسنطينة
+                        </option>
+                        <option value="25: المدية" ng-reflect-ng-value="المدية">26 - المدية</option>
+                        <option value="26: مستغانم" ng-reflect-ng-value="مستغانم">27 - مستغانم
+                        </option>
+                        <option value="27: المسيلة" ng-reflect-ng-value="المسيلة">28 - المسيلة
+                        </option>
+                        <option value="28: معسكر" ng-reflect-ng-value="معسكر">29 - معسكر</option>
+                        <option value="29: ورقلة" ng-reflect-ng-value="ورقلة">30 - ورقلة</option>
+                        <option value="30: وهران" ng-reflect-ng-value="وهران">31 - وهران</option>
+                        <option value="31: البيض" ng-reflect-ng-value="البيض">32 - البيض</option>
+                        <option value="32: إليزي" ng-reflect-ng-value="إليزي">33 - إليزي</option>
+                        <option value="33: برج بوعريريج" ng-reflect-ng-value="برج بوعريريج">34 - برج
+                            بوعريريج</option>
+                        <option value="34: بومرداس" ng-reflect-ng-value="بومرداس">35 - بومرداس
+                        </option>
+                        <option value="35: الطارف" ng-reflect-ng-value="الطارف">36 - الطارف</option>
+                        <option value="36: تيندوف" ng-reflect-ng-value="تيندوف">37 - تيندوف</option>
+                        <option value="37: تيسمسيلت" ng-reflect-ng-value="تيسمسيلت">38 - تيسمسيلت
+                        </option>
+                        <option value="38: وادي سوف" ng-reflect-ng-value="وادي سوف">39 - وادي سوف
+                        </option>
+                        <option value="39: خنشلة" ng-reflect-ng-value="خنشلة">40 - خنشلة</option>
+                        <option value="40: سوق أهراس" ng-reflect-ng-value="سوق أهراس">41 - سوق أهراس
+                        </option>
+                        <option value="41: تيبازة" ng-reflect-ng-value="تيبازة">42 - تيبازة</option>
+                        <option value="42: ميلة" ng-reflect-ng-value="ميلة">43 - ميلة</option>
+                        <option value="43: عين الدفلى" ng-reflect-ng-value="عين الدفلى">44 - عين
+                            الدفلى</option>
+                        <option value="44: النعامة" ng-reflect-ng-value="النعامة">45 - النعامة
+                        </option>
+                        <option value="45: عين تيموشنت" ng-reflect-ng-value="عين تيموشنت">46 - عين
+                            تيموشنت</option>
+                        <option value="46: غرداية" ng-reflect-ng-value="غرداية">47 - غرداية</option>
+                        <option value="47: غليزان" ng-reflect-ng-value="غليزان">48 - غليزان</option>
+                    </select>
+
+                    <input type="button" name="next" class="next action-button" value="Next" />
+
+
+                </fieldset>
+                <fieldset>
+                    <h2 class="fs-title">APPLICANT INFORMATION </h2>
+                    <h3 class="fs-subtitle">Your presence on the social network</h3>
+
+                    <label class="control-label" for="fullAddress"> العنوان </label>
+                    <input type="text" name="fullAddress" placeholder="العنوان " />
+
+                    <label class="control-label" for="Email"> البريد الإلكتروني
+                    </label>
+                    <input class="form-control form-control-sm " id="Email" name="Email"
+                        placeholder=" البريد الإلكتروني " required="" type="email" value="" required>
+
+                    <label class="control-label" for="mainPhoneNumber">الهاتف الرئيسي</label>
+                    <input class="form-control form-control-sm " id="mainPhoneNumber" name="mainPhoneNumber"
+                        placeholder="الهاتف الرئيسي" required value="">
+                    <label class="control-label" for="webLink">Site Web/ الموقع الالكتروني
+                    </label>
+                    <input class="form-control form-control-sm
+                                    id=" url" name="webLink" placeholder="HTTPS:// " type="url" value="" required>
+                    <label class="control-label" for="fbLink"> صفحه الفيس بوك</label>
+                    <input class="form-control form-control-sm
+                                    id=" url" name="fbLink" placeholder="صفحف الفيس بوك " type="url" value="" required>
+                    <label class="control-label" for="ytubeLink"> قناه اليوتيوب</label>
+                    <input class="form-control form-control-sm
+                                    id=" url" name="ytubeLink" placeholder=" عنوان قناه اليوتيوب" type="url" value=""
+                        required>
+
+                    <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
+                    <input type="button" name="next" class="next action-button" value="Next" />
+                </fieldset>
+                <fieldset>
+                    <h2 class="fs-title">PROJECT INFORMATION</h2>
+                    <h3 class="fs-subtitle">Fill in your credentials</h3>
+                    <label class="control-label" for="prjname"> Nom du projet / اسم المشروع </label>
+                    <input type="text" name="prjname" placeholder="Nom du projet / اسم المشروع" />
+                    <label class="control-label" for="prjfield"> Secteur d'activité / مجال العمل*
+                    </label>
+                    <select name="prjfield" id="input_3_29" class="form-control input-md" aria-required="true"
+                        aria-invalid="false">
+                        <option value="Fintech" selected="selected">Fintech</option>
+                        <option value="Cloud/Saas">Cloud/Saas</option>
+                        <option value="Agritech (agriculture de précision)">Agritech (agriculture de précision)</option>
+                        <option value="Biotechnologie">Biotechnologie</option>
+                        <option value="Economie circulaire (greentech)">Economie circulaire (greentech)</option>
+                        <option value="Logistique et transport">Logistique et transport</option>
+                        <option value="E-commerce">E-commerce</option>
+                        <option value="E-learning/ Edtech">E-learning/ Edtech</option>
+                        <option value="Govtech (e-administration)">Govtech (e-administration)</option>
+                        <option value="Legaltech">Legaltech</option>
+                        <option value="Food tech">Food tech</option>
+                        <option value="E-health (santé)">E-health (santé)</option>
+                        <option value="Smart City">Smart City</option>
+                        <option value="IOT (internet des objets)">IOT (internet des objets)</option>
+                        <option value="Big data">Big data</option>
+                        <option value="Tourisme/voyage">Tourisme/voyage</option>
+                        <option value="Energies renouvelables">Energies renouvelables</option>
+                        <option value="Pharma">Pharma</option>
+                        <option value="Education">Education</option>
+                        <option value="Intelligence Artificielle">Intelligence Artificielle</option>
+                        <option value="Réalité augmentée/virtuelle">Réalité augmentée/virtuelle</option>
+                        <option value="E-services">E-services</option>
+                        <option value="Economie sociale et solidaire.">Economie sociale et solidaire.</option>
+                        <option value="Cybersecurity">Cybersecurity</option>
+                        <option value="Electronique &amp; Composants">Electronique &amp; Composants</option>
+                        <option value="Jeux/loisir">Jeux/loisir</option>
+                        <option value="Autre">Autre</option>
+                    </select>
+                    <label class="control-label" for="prjdetail"> Description courte du projet/ شرح مختصر للمشروع*
+                    </label>
+
+                    <textarea name="prjdetail" id="input_3_27" class="textarea medium"
+                        aria-describedby="gfield_description_3_27" maxlength="400" aria-required="true"
+                        aria-invalid="false" rows="10" cols="50"></textarea>
+                    <div class="gfield_description" id="gfield_description_3_27">
+                        <font style="vertical-align: inherit;">
+                            <font style="vertical-align: inherit;">Describe in a maximum of 400 characters your project
+                                and why it is innovative</font>
+                        </font>
+                    </div>
+
+                    {{ form.file.errors }}
+                    <label class="control-label" for="{{ form.file.id_for_label }}">Présentation détaillé du projet et
+                        ses aspects d'innovation / العرض التفصيلي للمشروع وجوانب الابتكار فيه</label>
+                    {{form.file}}
+
+                    <label class="control-label" for="input_3_28">CV du/des fondateurs / السيرة الذاتية للمؤسسين</label>
+                    {{form.file_CV}}
+
+                    <label class="control-label" for="input_3_28">Brevet (si il y en a) / براءة الاختراع ان وجدت</label>
+                    {{form.file_Br}}
+
+
+                    <label class=" control-label" for="prjprgress"> Project progress / مدى تقدم المشروع *</label>
+
+                    <select name="prjprgress" id="input_3_30" class="form-control input-md" aria-required="true"
+                        aria-invalid="false">
+                        <option value="Concept/Idée" selected="selected">Concept / Idea</option>
+                        <option value="Prototype en développement">Prototype in development</option>
+                        <option value="Prototype prêt"> Prototype ready</option>
+                        <option value="Produit prét">Ready product</option>
+                    </select>
+                    <label class="control-label" for="awards"> Contests / awards / الجوائز و المسابقات
+
+                    </label>
+
+                    <textarea name="awards" id="input_3_27" class="textarea medium"
+                        aria-describedby="gfield_description_3_27" maxlength="400" aria-required="true"
+                        aria-invalid="false" rows="10" cols="50"></textarea>
+                    <div class="gfield_description" id="gfield_description_3_27">
+                        <font style="vertical-align: inherit;">
+                            <font style="vertical-align: inherit;">
+                                0 of 400 maximum characters </font>
+                        </font>
+                    </div>
+
+
+                    <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
+                    <input type="submit" name="submit" class="submit action-button" value="Submit" />
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+
+    <script>
+
+        //jQuery time
+        var current_fs, next_fs, previous_fs; //fieldsets
+        var left, opacity, scale; //fieldset properties which we will animate
+        var animating; //flag to prevent quick multi-click glitches
+
+        $(".next").click(function () {
+            if (animating) return false;
+            animating = true;
+
+            current_fs = $(this).parent();
+            next_fs = $(this).parent().next();
+
+            //activate next step on progressbar using the index of next_fs
+            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+
+            //show the next fieldset
+            next_fs.show();
+            //hide the current fieldset with style
+            current_fs.animate({ opacity: 0 }, {
+                step: function (now, mx) {
+                    //as the opacity of current_fs reduces to 0 - stored in "now"
+                    //1. scale current_fs down to 80%
+                    scale = 1 - (1 - now) * 0.2;
+                    //2. bring next_fs from the right(50%)
+                    left = (now * 50) + "%";
+                    //3. increase opacity of next_fs to 1 as it moves in
+                    opacity = 1 - now;
+                    current_fs.css({
+                        'transform': 'scale(' + scale + ')',
+                        'position': 'absolute'
+                    });
+                    next_fs.css({ 'left': left, 'opacity': opacity });
+                },
+                duration: 800,
+                complete: function () {
+                    current_fs.hide();
+                    animating = false;
+                },
+                //this comes from the custom easing plugin
+                easing: 'easeInOutBack'
+            });
+        });
+
+        $(".previous").click(function () {
+            if (animating) return false;
+            animating = true;
+
+            current_fs = $(this).parent();
+            previous_fs = $(this).parent().prev();
+
+            //de-activate current step on progressbar
+            $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+
+            //show the previous fieldset
+            previous_fs.show();
+            //hide the current fieldset with style
+            current_fs.animate({ opacity: 0 }, {
+                step: function (now, mx) {
+                    //as the opacity of current_fs reduces to 0 - stored in "now"
+                    //1. scale previous_fs from 80% to 100%
+                    scale = 0.8 + (1 - now) * 0.2;
+                    //2. take current_fs to the right(50%) - from 0%
+                    left = ((1 - now) * 50) + "%";
+                    //3. increase opacity of previous_fs to 1 as it moves in
+                    opacity = 1 - now;
+                    current_fs.css({ 'left': left });
+                    previous_fs.css({ 'transform': 'scale(' + scale + ')', 'opacity': opacity });
+                },
+                duration: 800,
+                complete: function () {
+                    current_fs.hide();
+                    animating = false;
+                },
+                //this comes from the custom easing plugin
+                easing: 'easeInOutBack'
+            });
+        });
+
+    </script>
+    <!-- <script src="{% static 'blog/js/register.js' %}"></script> -->
+</body>
+
+</html>

@@ -1,0 +1,218 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+
+
+
+
+
+
+{% if messages%} {% for message in messages%} <div class="alert alert-warning"> {{message}}</div>
+{%endfor%}
+{% endif %}
+
+
+
+
+
+
+
+
+<form method="POST" id="formmV" class="cmxform" novalidate="">
+
+    {% csrf_token %}
+
+    <div class="">
+        <h4 class="text-center">معلومات عن الشركات الناشئة / الصغيرة</h4>
+        <h5 class="text-center">
+            يهدف هذا القسم إلى توفير معلومات حول نشاطك التجاري. يرجى أن تكون محددة وموجزة.
+        </h5>
+        <br>
+        <div class="row">
+            <div class="col-xs-offset-1 col-xs-10 col-sm-offset-1 col-sm-10">
+                <div class="form-group">
+
+                    <label class="control-label" for="{{ form.subject.id_for_label }}">اسم الشركة الناشئة</label>
+                    <input class="form-control form-control-sm" type="text" name="companyName" value=""
+                        placeholder="اسم الشركه" id="id_companyName" required>
+                    {{data.companyName}}
+                    {{data.companyName.errors}}
+
+
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="creationDate">تاريخ الإنشاء</label>
+                    <input class="form-control form-control-sm" type="date" name="creationDate"
+                        value="{{data.creationDate}}" id="creationDate" placeholder="تاريخ الإنشاء" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="associatesNumber">عدد الشركاء</label>
+                    <input class="form-control form-control-sm " id="associatesNumber" name="associatesNumber"
+                        placeholder=" Nombre d'associées" type="number" value="{{data.associatesNumber}}">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="employeesNumber">عدد العاملين</label>
+                    <p>
+                        يرجى عدم إدراج مؤسسي / مالكي الشركة في عدد الموظفين.
+                    </p>
+                    <input class="form-control form-control-sm " id="employeesNumber" name="employeesNumber"
+                        placeholder="Nombre d'employés" required type="number" value="{{data.employeesNumber}}">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="createdJobsNumber">
+                        عدد الوظائف التي أنشأتها شركتك
+                    </label>
+                    <input class="form-control form-control-sm" id="createdJobsNumber" name="createdJobsNumber"
+                        placeholder="عدد الوظائف التي أنشأتها شركتك" type="number" value="{{data.createdJobsNumber}}"
+                        ng-reflect-model="0">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="status">الوضع القانوني</label>
+                    <input class="form-control form-control-sm" id="status" name="status"
+                        placeholder="SARL/EURL/SPA...etc." required type="text" value="{{data.status}}">
+
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="fullAddress">العنوان الكامل</label>
+                    <p>
+                        يرجى كتابة العنوان بالضبط كما يظهر في الوثائق الرسمية للشركة.
+                    </p>
+                    <input class="form-control form-control-sm" id="fullAddress" name="fullAddress"
+                        placeholder="العنوان الكامل" required type="text" ng-reflect-required=""
+                        ng-reflect-name="fullAddress" value="{{data.associatesNumber}}">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="wilaya">الولاية</label>
+                    <select class="form-control input-md ng-untouched ng-pristine ng-invalid" id="wilaya" name="wilaya"
+                        required="True" ng-reflect-required="" ng-reflect-name="wilaya" ng-reflect-model="" value=''>
+
+                        {{data.wilaya}}
+
+
+                        bindings={
+                        "ng-reflect-ng-for-of": "[object Object],[object Object"
+                        }
+                        <option value="0: أدرار" ng-reflect-ng-value="أدرار">1 - أدرار</option>
+                        <option value="1: الشلف" ng-reflect-ng-value="الشلف">2 - الشلف</option>
+                        <option value="2: الأغواط" ng-reflect-ng-value="الأغواط">3 - الأغواط
+                        </option>
+                        <option value="3: أم البواقي" ng-reflect-ng-value="أم البواقي">4 - أم
+                            البواقي</option>
+                        <option value="4: باتنة" ng-reflect-ng-value="باتنة">5 - باتنة</option>
+                        <option value="5: بجاية" ng-reflect-ng-value="بجاية">6 - بجاية</option>
+                        <option value="6: بسكرة" ng-reflect-ng-value="بسكرة">7 - بسكرة</option>
+                        <option value="7: بشار" ng-reflect-ng-value="بشار">8 - بشار</option>
+                        <option value="8: البليدة" ng-reflect-ng-value="البليدة">9 - البليدة
+                        </option>
+                        <option value="9: البويرة" ng-reflect-ng-value="البويرة">10 - البويرة
+                        </option>
+                        <option value="10: تمنراست" ng-reflect-ng-value="تمنراست">11 - تمنراست
+                        </option>
+                        <option value="11: تبسة" ng-reflect-ng-value="تبسة">12 - تبسة</option>
+                        <option value="12: تلمسان" ng-reflect-ng-value="تلمسان">13 - تلمسان</option>
+                        <option value="13: تيارت" ng-reflect-ng-value="تيارت">14 - تيارت</option>
+                        <option value="14: تيزي وزو" ng-reflect-ng-value="تيزي وزو">15 - تيزي وزو
+                        </option>
+                        <option value="15: الجزائر" ng-reflect-ng-value="الجزائر">16 - الجزائر
+                        </option>
+                        <option value="16: الجلفة" ng-reflect-ng-value="الجلفة">17 - الجلفة</option>
+                        <option value="17: جيجل" ng-reflect-ng-value="جيجل">18 - جيجل</option>
+                        <option value="18: سطيف" ng-reflect-ng-value="سطيف">19 - سطيف</option>
+                        <option value="19: سعيدة" ng-reflect-ng-value="سعيدة">20 - سعيدة</option>
+                        <option value="20: سكيكدة" ng-reflect-ng-value="سكيكدة">21 - سكيكدة</option>
+                        <option value="21: سيدي بلعباس" ng-reflect-ng-value="سيدي بلعباس">22 - سيدي
+                            بلعباس</option>
+                        <option value="22: عنابة" ng-reflect-ng-value="عنابة">23 - عنابة</option>
+                        <option value="23: قالمة" ng-reflect-ng-value="قالمة">24 - قالمة</option>
+                        <option value="24: قسنطينة" ng-reflect-ng-value="قسنطينة">25 - قسنطينة
+                        </option>
+                        <option value="25: المدية" ng-reflect-ng-value="المدية">26 - المدية</option>
+                        <option value="26: مستغانم" ng-reflect-ng-value="مستغانم">27 - مستغانم
+                        </option>
+                        <option value="27: المسيلة" ng-reflect-ng-value="المسيلة">28 - المسيلة
+                        </option>
+                        <option value="28: معسكر" ng-reflect-ng-value="معسكر">29 - معسكر</option>
+                        <option value="29: ورقلة" ng-reflect-ng-value="ورقلة">30 - ورقلة</option>
+                        <option value="30: وهران" ng-reflect-ng-value="وهران">31 - وهران</option>
+                        <option value="31: البيض" ng-reflect-ng-value="البيض">32 - البيض</option>
+                        <option value="32: إليزي" ng-reflect-ng-value="إليزي">33 - إليزي</option>
+                        <option value="33: برج بوعريريج" ng-reflect-ng-value="برج بوعريريج">34 - برج
+                            بوعريريج</option>
+                        <option value="34: بومرداس" ng-reflect-ng-value="بومرداس">35 - بومرداس
+                        </option>
+                        <option value="35: الطارف" ng-reflect-ng-value="الطارف">36 - الطارف</option>
+                        <option value="36: تيندوف" ng-reflect-ng-value="تيندوف">37 - تيندوف</option>
+                        <option value="37: تيسمسيلت" ng-reflect-ng-value="تيسمسيلت">38 - تيسمسيلت
+                        </option>
+                        <option value="38: وادي سوف" ng-reflect-ng-value="وادي سوف">39 - وادي سوف
+                        </option>
+                        <option value="39: خنشلة" ng-reflect-ng-value="خنشلة">40 - خنشلة</option>
+                        <option value="40: سوق أهراس" ng-reflect-ng-value="سوق أهراس">41 - سوق أهراس
+                        </option>
+                        <option value="41: تيبازة" ng-reflect-ng-value="تيبازة">42 - تيبازة</option>
+                        <option value="42: ميلة" ng-reflect-ng-value="ميلة">43 - ميلة</option>
+                        <option value="43: عين الدفلى" ng-reflect-ng-value="عين الدفلى">44 - عين
+                            الدفلى</option>
+                        <option value="44: النعامة" ng-reflect-ng-value="النعامة">45 - النعامة
+                        </option>
+                        <option value="45: عين تيموشنت" ng-reflect-ng-value="عين تيموشنت">46 - عين
+                            تيموشنت</option>
+                        <option value="46: غرداية" ng-reflect-ng-value="غرداية">47 - غرداية</option>
+                        <option value="47: غليزان" ng-reflect-ng-value="غليزان">48 - غليزان</option>
+                    </select>
+                    <div class="alert alert-danger" hidden="">wilaya is required</div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="id_ownersEmail">عنوان البريد الإلكتروني
+                        للمدير</label>
+                    <input class="form-control form-control-sm " id="id_ownersEmail" name="ownersEmail"
+                        placeholder="عنوان البريد الإلكتروني للمدير" required="" type="text"
+                        value="{{data.ownersEmail}}" required>
+
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="id_ownersLinkedin">لينكدين المدير</label>
+                    <input class="form-control form-control-sm
+                                    id =" id_ownersLinkedin" name="ownersLinkedin" placeholder="لينكدين المدير"
+                        type="url" value="{{data.ownersLinkedin}}" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="id_contactEmail">عنوان البريد الإلكتروني
+                        للاتصال</label>
+                    <p>
+                        عنوان البريد الإلكتروني الذي تريد الاتصال به للمشاريع أو التعاونات
+                        المستقبلية. يمكن أن يكون هذا هو نفس البريد الإلكتروني كما هو موضح أعلاه.
+                    </p>
+                    <input class="form-control form-control-sm " id="id_contactEmail" name="contactEmail"
+                        placeholder="عنوان البريد الإلكتروني للاتصال" required type="email"
+                        value="{{data.contactEmail}}">
+
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="mobilePhoneNumber">الهاتف المحمول</label>
+                    <p>
+                        سيتم إرسال رقم الهاتف هذا إلى الشركاء المحتملين للمشروع في حالة الاهتمام
+                        بنشاط الشركة. يرجى تقديم رقم هاتف يمكن الاتصال بشركتك في أي وقت.
+                    </p>
+                    <input class="form-control form-control-sm" id="mobilePhoneNumber" name="mobilePhoneNumber"
+                        pattern="(\+|00){0,2}[0-9]{2,14}" placeholder="الهاتف المحمول" required type="tel"
+                        value="{{data.mobilePhoneNumber}}">
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="mainPhoneNumber">الهاتف الرئيسي</label>
+                    <input class="form-control form-control-sm " id="mainPhoneNumber" name="mainPhoneNumber"
+                        placeholder="الهاتف الرئيسي" required value="{{data.mainPhoneNumber}}">
+                </div>
+            </div>
+
+        </div>
+        <input class="btn-1 btn btn-primary py-2 mb-3" type="submit" value="تسجيل">
+    </div>
+</form>
+
+{% endblock content %}

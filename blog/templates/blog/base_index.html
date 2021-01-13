@@ -1,0 +1,1337 @@
+{% load static %}
+{% load post_tag %}
+<!DOCTYPE html>
+
+<html lang="ar">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Raleway&family=Sansita+Swashed:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'blog/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/css/fontawesome/font-awesome.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/css/fontawesome/all.css' %}">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet" />
+    {% if title %}
+    <title>مدونة | {{title}}</title>
+    {% else %}
+    <title>مدونة</title>
+    {% endif %}
+    <link rel="stylesheet" href="{% static 'blog/css/swiper.min.css' %}">
+
+    <!-- <link rel="stylesheet" href="{% static 'blog/css/main.css' %}"> -->
+    <!-- <link rel="stylesheet" href="{% static 'blog/css/style.css' %}"> -->
+    <link rel="shortcut icon" href="{% static 'blog/images/favicon.ico' %}">
+    <!-- swiper => slider -->
+    <!-- bootstrap -->
+    <!-- css file -->
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body,
+        html {
+            font-family: "Cairo", sans-serif;
+            background-color: #f0f5f8;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        p {
+            margin-bottom: 40px;
+            width: fit-content;
+            font-size: 20px;
+            color: black;
+        }
+
+        #img {
+            /* display:none; */
+            height: 180px;
+            width: 100%;
+            object-fit: fill;
+        }
+
+        @media (print),
+        (prefers-reduced-motion: reduce) {
+            .animated {
+                -webkit-animation-duration: 1ms !important;
+                animation-duration: 1ms !important;
+                -webkit-transition-duration: 1ms !important;
+                transition-duration: 1ms !important;
+                -webkit-animation-iteration-count: 1 !important;
+                animation-iteration-count: 1 !important;
+            }
+        }
+
+        .btn-1 {
+            background-color: #384ceb;
+            cursor: pointer;
+            color: #ffffff;
+        }
+
+        .btn-2 {
+            color: #ffffff;
+            padding: 10px 45px !important;
+            border: 1px solid #ffffff;
+            transition: 1s;
+            background-color: #384ceb;
+            border-radius: 20px;
+            z-index: 1000;
+            opacity: 1;
+            position: absolute;
+            top: 85%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .btn-2:hover {
+            color: #384ceb;
+            background: transparent;
+            border: none;
+            color: #ffffff;
+        }
+
+        .animation,
+        .card1 img:hover {
+            animation: shake 0.5s;
+            animation-iteration-count: infinite;
+        }
+
+        @keyframes shake {
+            0% {
+                transform: translate(1px, 1px) rotate(0deg);
+            }
+
+            10% {
+                transform: translate(-1px, -2px) rotate(-1deg);
+            }
+
+            20% {
+                transform: translate(-3px, 0px) rotate(1deg);
+            }
+
+            30% {
+                transform: translate(3px, 2px) rotate(0deg);
+            }
+
+            40% {
+                transform: translate(1px, -1px) rotate(1deg);
+            }
+
+            50% {
+                transform: translate(-1px, 2px) rotate(-1deg);
+            }
+
+            60% {
+                transform: translate(-3px, 1px) rotate(0deg);
+            }
+
+            70% {
+                transform: translate(3px, 1px) rotate(-1deg);
+            }
+
+            80% {
+                transform: translate(-1px, -1px) rotate(1deg);
+            }
+
+            90% {
+                transform: translate(1px, 2px) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(1px, -2px) rotate(-1deg);
+            }
+        }
+
+        .glass {
+            position: absolute;
+            border: 3px solid #000;
+            border-radius: 50%;
+            cursor: none;
+            /*Set the size of the magnifier glass:*/
+            width: 100px;
+            height: 100px;
+        }
+
+        .slider {
+            margin-top: 70px;
+        }
+
+        .navbar {
+
+            background: #384ceb;
+            position: fixed;
+            direction: rtl !important;
+            width: 100%;
+            border-bottom: 1px solid #ffffff;
+            z-index: 1000;
+            height: 100px;
+        }
+
+        .navbar:hover {
+            background: #c2dce9;
+            transition: 1s;
+        }
+
+        .navbar .dropdown-menu {
+            background-color: #384ceb;
+            transition: 1s ease-in-out;
+        }
+
+        .navbar .dropdown-menu:hover {
+            background: #c2dce9;
+        }
+
+        .navbar .dropdown-menu .dropdown-item {
+            color: #ffffff;
+        }
+
+        .navbar .dropdown-menu .dropdown-item:hover {
+            background: transparent;
+            transition: 1s ease-in-out;
+            color: #384ceb;
+        }
+
+        .navbar .navbar-collapse {
+            align-items: center;
+            width: auto;
+        }
+
+        .navbar .navbar-toggler {
+            background-color: #ffffff;
+            border: 1px solid #384ceb;
+            box-shadow: inset;
+            outline: none !important;
+            box-shadow: none;
+        }
+
+        .navbar .navbar-toggler .icon {
+            color: #384ceb;
+        }
+
+        .navbar .navbar-nav .nav-link {
+            color: #ffffff;
+            transition: 1s ease-in-out;
+            font-weight: 400;
+            text-align: right;
+        }
+
+        .navbar .navbar-nav .nav-link:hover {
+            color: #384ceb;
+        }
+
+        .card1 {
+            padding: 100px 0;
+            text-align: center;
+            background-color: #f0f5f8;
+            transition: 0.8s;
+            box-shadow: 0px 3px 20px #c2dce9;
+        }
+
+        .card1 img {
+            border-radius: 15px;
+            transition: 0.8s;
+        }
+
+        p {
+            margin-bottom: 40px;
+            width: fit-content;
+            font-size: 20px;
+        }
+
+        .cart,
+        .cart1 {
+            position: relative;
+            display: none;
+            transition: 1s;
+            box-shadow: 0px 3px 20px #c2dce9;
+            height: 100%;
+            border-radius: 15px;
+        }
+
+        .cart:hover,
+        .cart1:hover {
+            transform: scale(0.9);
+        }
+
+        .footer {
+            text-align: right;
+            background: #c2dce9;
+            color: #384ceb;
+            border-top: 8px solid #384ceb;
+            text-align: center;
+            padding: 100px 0;
+        }
+
+        @media (max-width: 768px) {
+            .footer {
+                text-align: left;
+            }
+        }
+
+        .footer #myinpu {
+            outline: none;
+            box-shadow: none;
+        }
+
+        .footer h2 {
+            width: 100%;
+            font-size: 15px;
+            font-weight: bold;
+            margin-left: 5px;
+            margin-top: 20px;
+            color: #384ceb;
+        }
+
+        .footer h6 {
+            font-size: 14px;
+            margin-top: 15px;
+            text-align: left;
+            cursor: pointer;
+            margin-top: 20px;
+            color: #384ceb;
+            transition-duration: 1s;
+        }
+
+        .footer h6:hover {
+            color: #384ceb;
+        }
+
+        .footer .sochial {
+            margin-top: 30px;
+        }
+
+        .footer .sochial .fab {
+            background: #f0f5f8;
+            color: #384ceb;
+            padding: 18px;
+            border-radius: 50%;
+            margin: 10px;
+            transition: 1s ease-in-out;
+        }
+
+        .footer .sochial .fab:hover {
+            background: #ffffff;
+            color: #384ceb;
+            border: 1px solid #384ceb;
+            transform: rotateY(180deg);
+        }
+
+        .footer p {
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .footer p span:hover {
+            color: #384ceb;
+            transition-duration: 1s;
+        }
+
+        @media (print),
+        (prefers-reduced-motion: reduce) {
+            .animated {
+                -webkit-animation-duration: 1ms !important;
+                animation-duration: 1ms !important;
+                -webkit-transition-duration: 1ms !important;
+                transition-duration: 1ms !important;
+                -webkit-animation-iteration-count: 1 !important;
+                animation-iteration-count: 1 !important;
+            }
+        }
+
+        .text .btn {
+            position: fixed;
+            bottom: 10px;
+            right: -10px;
+            display: none;
+            color: #384ceb;
+            border: 0;
+        }
+
+        .text i {
+            text-align: center;
+            line-height: 50px;
+            text-align: center;
+            z-index: 1000;
+            font-size: 70px;
+        }
+
+        .slider {
+            position: relative;
+            color: #ffffff;
+        }
+
+        .slider .carousel-inner .ovarlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .slider .prev {
+            width: 40px;
+            font-size: 10px;
+            color: #ffffff;
+        }
+
+        .slider .prev span {
+            background-color: transparent;
+            opacity: 0.9;
+        }
+
+        .slider .carousel-inner {
+            position: relative;
+            color: #ffffff;
+            text-align-last: right;
+        }
+
+        .slider .carousel-inner .carousel-caption {
+            color: #ffffff;
+        }
+
+        .slider .carousel-inner .carousel-caption h1,
+        .slider .carousel-inner .carousel-caption .h1 {
+            font-size: 2.25rem;
+            text-transform: uppercase;
+        }
+
+        .slider .carousel-inner .carousel-caption h1 .lead,
+        .slider .carousel-inner .carousel-caption .h1 .lead {
+            font-size: 0.9rem;
+            text-transform: capitalize;
+            color: #ffffff;
+        }
+
+        /* carosal animation text */
+        .home {
+            min-height: 100vh;
+            padding-top: 0 !important;
+        }
+
+        .home .home_content .carousel {
+            width: 100%;
+        }
+
+        @media (min-width: 577px) {
+            .home .home_content .carousel {
+                height: 100%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .home .home_content .carousel {
+                min-height: 100%;
+            }
+        }
+
+        .home .home_content .carousel .carousel-inner .carousel-item .carousel_bottom_overlay {
+            background: rgba(39, 117, 255, 0.7);
+            top: 0;
+            left: 0;
+        }
+
+        .home .home_content .carousel .carousel-inner .carousel-item .carousel_item_inner {
+            padding-top: 140px;
+            background-image: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)),
+            url("{% static 'blog/img_carsol/bg_home1.jpg' %}");
+            background-size: cover;
+            z-index: 9;
+            transform: translateX(30%);
+            transition: all 0.5s;
+        }
+
+        .home .home_content .carousel .carousel-inner .carousel-item .carousel_item_inner.carousel_item_inner_other {
+            background-image: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)),
+            url("{% static 'blog/img_carsol/bg_home2.jpg' %}");
+        }
+
+        @media (max-width: 576px) {
+            .home .home_content .carousel .carousel-inner .carousel-item .carousel_item_inner .ordering {
+                order: 2;
+                margin-top: 60px;
+            }
+        }
+
+        .home .home_content .carousel .carousel-inner .carousel-item .carousel_item_inner .left_part .left_part_head h2 {
+            color: #fff;
+            font-size: 50px;
+            transform: translateY(200px);
+            opacity: 0;
+            transition: all 1s;
+            transition-delay: 0.5s;
+        }
+
+        .home .home_content .carousel .carousel-inner .carousel-item .carousel_item_inner .left_part .left_part_head h2 .precent_effect {
+            padding: 0 25px;
+            z-index: 3;
+            color: #2775ff;
+            margin-left: 15px;
+        }
+
+        .home .home_content .carousel .carousel-inner .carousel-item .carousel_item_inner .left_part .left_part_head h2 .precent_effect span {
+            left: 0;
+            width: 100%;
+            height: 25%;
+            background: #07e1ff;
+            z-index: -1;
+            border-radius: 15px;
+        }
+
+        .home .home_content .carousel .carousel-inner .carousel-item .carousel_item_inner .left_part .left_part_head h2 .precent_effect span:nth-child(1) {
+            top: 0;
+            transform: translateX(8px);
+        }
+
+        .home .home_content .carousel .carousel-inner .carousel-item .carousel_item_inner .left_part .left_part_head h2 .precent_effect span:nth-child(2) {
+            top: 25%;
+        }
+
+        .home .home_content .carousel .carousel-inner .carousel-item .carousel_item_inner .left_part .left_part_head h2 .precent_effect span:nth-child(3) {
+            top: 50%;
+            transform: scaleX(1.07);
+            transform-origin: right;
+        }
+
+        .home .home_content .carousel .carousel-inner .carousel-item .carousel_item_inner .left_part .left_part_head h2 .precent_effect span:nth-child(4) {
+            top: 75%;
+            transform-origin: left;
+            transform: scaleX(1.07);
+        }
+
+        .home .home_content .carousel .carousel-inner .carousel-item .carousel_item_inner .left_part .left_part_head h2 b {
+            font-size: 60px;
+        }
+
+        @media (max-width: 991px) {
+            .home .home_content .carousel .carousel-inner .carousel-item .carousel_item_inner .left_part .left_part_head h2 {
+                font-size: 35px;
+            }
+
+            .home .home_content .carousel .carousel-inner .carousel-item .carousel_item_inner .left_part .left_part_head h2 b {
+                font-size: 40px;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .home .home_content .carousel .carousel-inner .carousel-item .carousel_item_inner .left_part .left_part_head h2 {
+                font-size: 25px;
+            }
+
+            .home .home_content .carousel .carousel-inner .carousel-item .carousel_item_inner .left_part .left_part_head h2 b {
+                font-size: 35px;
+            }
+        }
+
+        .home .home_content .carousel .carousel-inner .carousel-item .carousel_item_inner .left_part .empty_for_wavy {
+            height: 200px;
+        }
+
+        .home .home_content .carousel .carousel-inner .carousel-item .carousel_item_inner .left_part .left_part_body {
+            margin-top: 60px;
+        }
+
+        @media (min-width: 767px) {
+            .home .home_content .carousel .carousel-inner .carousel-item .carousel_item_inner .left_part .left_part_body {
+                padding-right: 120px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .home .home_content .carousel .carousel-inner .carousel-item .carousel_item_inner .left_part .left_part_body {
+                margin-bottom: 60px;
+            }
+        }
+
+        .home .home_content .carousel .carousel-inner .carousel-item .carousel_item_inner .left_part .left_part_body h2 {
+            font-size: 120px;
+            color: #fff;
+            margin-bottom: 25px;
+            transform: rotate(15deg) translateX(200px);
+            opacity: 0;
+            transition: all 1s;
+            transition-delay: 0.8s;
+        }
+
+        @media (max-width: 991px) {
+            .home .home_content .carousel .carousel-inner .carousel-item .carousel_item_inner .left_part .left_part_body h2 {
+                font-size: 100px;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .home .home_content .carousel .carousel-inner .carousel-item .carousel_item_inner .left_part .left_part_body h2 {
+                font-size: 80px;
+            }
+        }
+
+        .home .home_content .carousel .carousel-inner .carousel-item .carousel_item_inner .left_part .left_part_body p {
+            color: #fff;
+            font-size: 30px;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.8s;
+            transition-delay: 1s;
+            margin-bottom: 25px;
+        }
+
+        .home .home_content .carousel .carousel-inner .carousel-item .carousel_item_inner .left_part .left_part_body p span {
+            color: #b50aff;
+        }
+
+        .home .home_content .carousel .carousel-inner .carousel-item .carousel_item_inner .left_part .left_part_body .buy {
+            opacity: 0;
+            transition: all 0.5s;
+            transition-delay: 1.2s;
+        }
+
+        .home .home_content .carousel .carousel-inner .carousel-item .carousel_item_inner .left_part .left_part_body .buy .icon {
+            background: #fff;
+            width: 70px;
+            height: 70px;
+            line-height: 70px;
+            text-align: center;
+            border-radius: 50%;
+            cursor: pointer;
+            margin-right: 25px;
+            transition: all 0.5s;
+        }
+
+        .home .home_content .carousel .carousel-inner .carousel-item .carousel_item_inner .left_part .left_part_body .buy .icon i {
+            font-size: 20px;
+            color: #2775ff;
+            transition: all 0.5s;
+        }
+
+        .home .home_content .carousel .carousel-inner .carousel-item .carousel_item_inner .left_part .left_part_body .buy .icon:hover {
+            background: #b50aff;
+        }
+
+        .home .home_content .carousel .carousel-inner .carousel-item .carousel_item_inner .left_part .left_part_body .buy .icon:hover i {
+            color: #fff;
+        }
+
+        .home .home_content .carousel .carousel-inner .carousel-item .carousel_item_inner .left_part .left_part_body .buy h3 {
+            color: #fff;
+        }
+
+        .home .home_content .carousel .carousel-inner .carousel-item .carousel_item_inner .left_part .left_part_body .buy h3 small {
+            color: #2775ff;
+            font-size: 70%;
+        }
+
+        .home .home_content .carousel .carousel-inner .carousel-item .carousel_item_inner .right_part .img {
+            transform: translateX(200px);
+            opacity: 0;
+            transition: all 1s;
+            transition-delay: 0.5s;
+        }
+
+        @media (max-width: 576px) {
+            .home .home_content .carousel .carousel-inner .carousel-item .carousel_item_inner .right_part .img img {
+                max-height: 409px;
+            }
+        }
+
+        .home .home_content .carousel .carousel-inner .carousel-item.active .carousel_item_inner {
+            transform: translateX(0) !important;
+        }
+
+        .home .home_content .carousel .carousel-inner .carousel-item.active .left_part_head h2 {
+            transform: translateY(0) !important;
+            opacity: 1 !important;
+        }
+
+        .home .home_content .carousel .carousel-inner .carousel-item.active .left_part_body h2 {
+            transform: rotate(0) translateX(0) !important;
+            opacity: 1 !important;
+        }
+
+        .home .home_content .carousel .carousel-inner .carousel-item.active .left_part_body p {
+            transform: translateY(0) !important;
+            opacity: 1 !important;
+        }
+
+        .home .home_content .carousel .carousel-inner .carousel-item.active .left_part_body .buy {
+            opacity: 1 !important;
+        }
+
+        .home .home_content .carousel .carousel-inner .carousel-item.active .right_part .img {
+            transform: translateX(0) !important;
+            opacity: 1 !important;
+        }
+
+        .home .wavy__bg {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            z-index: 9;
+        }
+
+
+        /* carosal animation text */
+
+        /*# sourceMappingURL=style.css.map */
+    </style>
+</head>
+
+<body>
+    <div class="row text-center">
+        <div class="col-lg-12">
+            <div class="form-group">
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-{{message.tags}}">
+                    {{message}}
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+
+    <section class="text">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- <button id="goup" class="btn">go up</button> -->
+                    <i id="goup" class="btn fa fa-sort-up"></i>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =====================
+            start header
+     ====================== -->
+
+
+    <!-- =====================
+            start nav bar
+     ====================== -->
+    {%block headerphoto%}
+    {%endblock%}
+
+    <nav class="navbar navbar-expand-lg  text-uppercase">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="icon"><i class="fas fa-bars"></i></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-start" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link active" href="{% url 'home' %}">الرئيسية <span
+                            class="sr-only">(current)</span>
+                    </a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            التصنيفات
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            {% for category in category_list %}
+                            <a class="dropdown-item" href="/category/{{category.name}}">
+                                {{category.name}}
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </li>
+                    <!-- الجداول -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            انضم الينا
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                            <a class="dropdown-item" href="{% url 'formmV' %}">
+                                الشركات الناشئة / الصغيرة
+                            </a>
+                            <a class="dropdown-item" href="{% url 'multilistformmV' %}">
+                                فكره مشروع مبتكر
+                            </a>
+                            <a class="dropdown-item" href="{% url 'multilistformmBr' %}">
+                                حاضنات الاعمال
+                            </a>
+
+                        </div>
+                    </li>
+                    <!-- الجداول -->
+                    <a class="nav-item nav-link" href="{% url 'adminapp' %}">
+                        الأدمن
+                    </a>
+                </div>
+            </div>
+
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup">
+                {% if user.is_authenticated %}
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link" href="{% url 'new_post' %}">تدوينة جديدة</a>
+                    <a class="nav-item nav-link" href="{% url 'allposts' %}"> جميــع الموضوعات</a>
+                    <a class="nav-item nav-link" href="{% url 'profile' %}">الملف الشخصي</a>
+                    <a class="nav-item nav-link" href="{% url 'logout' %}">تسجيل خروج</a>
+                    {% else %}
+                    <a class="nav-item nav-link" href="{% url 'login' %}">تسجيل دخول</a>
+                    <a class="nav-item nav-link" href="{% url 'register' %}">تسجيل</a>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="navbar-brand" href="#"><img class="img-fluid" src="" width="70px" height="50px"
+                            alt=""></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- =====================
+            end nav bar
+     ====================== -->
+
+    <!-- <section class="header">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <button class="btn-2" href="#">
+      انضم معنا</button>
+    </div>
+        </div>
+      </div>
+      
+    </section> -->
+    <div class="slider">
+        <!-- <div class="container-fliud">
+
+
+            <div id="main-slider" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item carousel-one active">
+                        <div class="ovarlay"></div>
+                        <img src="{% static 'blog/images/home-1.jpg' %}" class="d-block w-100" alt="...">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5 class="h1"> مبادرة الشركات الناشئة</h5>
+                            <h1>ابدأ مشروعك الجديد</h1>
+                            <h6 class="lead">تنظيم تظاهرة جيل الرقمنة الرقمنة
+                                الجزائري حول المؤسسات الناشنئة
+                                والإقتصاد الرقمي يومي 16 و 18 أبريل 2020
+                            </h6>
+                            <a href="#" class="btn-2">انضم معنا</a>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item carousel-tow">
+                        <div class="ovarlay"></div>
+                        <img src="{% static 'blog/images/1 (3).jpg' %}" class="d-block w-100" alt="...">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5 class="h1"> مبادرة الشركات الناشئة</h5>
+                            <h1>ابدأ مشروعك الجديد</h1>
+                            <h6 class="lead">تنظيم تظاهرة جيل الرقمنة الرقمنة
+                                الجزائري حول المؤسسات الناشنئة
+                                والإقتصاد الرقمي يومي 16 و 18 أبريل 2020
+                            </h6>
+                            <a href="#" class="btn-2">انضم معنا</a>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item carousel-three">
+                        <div class="ovarlay"></div>
+                        <img src="{% static 'blog/images/1 (5).jpg' %}" class="d-block w-100" alt="...">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5 class="h1"> مبادرة الشركات الناشئة</h5>
+                            <h1>ابدأ مشروعك الجديد</h1>
+                            <h6 class="lead">تنظيم تظاهرة جيل الرقمنة الرقمنة
+                                الجزائري حول المؤسسات الناشنئة
+                                والإقتصاد الرقمي يومي 16 و 18 أبريل 2020
+                            </h6>
+                            <a href="#" class="btn-2">انضم معنا</a>
+                        </div>
+                    </div>
+                    <div class="carousel-item carousel-three">
+                        <div class="ovarlay"></div>
+                        <img src="{% static 'blog/images/1 (4).jpg' %}" class="d-block w-100" alt="...">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5 class="h1"> مبادرة الشركات الناشئة</h5>
+                            <h1>ابدأ مشروعك الجديد</h1>
+                            <h6 class="lead">تنظيم تظاهرة جيل الرقمنة الرقمنة
+                                الجزائري حول المؤسسات الناشنئة
+                                والإقتصاد الرقمي يومي 16 و 18 أبريل 2020
+                            </h6>
+                            <a href="#" class="btn-2">انضم معنا</a>
+                        </div>
+                    </div>
+                    <div class="carousel-item carousel-three">
+                        <div class="ovarlay"></div>
+                        <img src="{% static 'blog/images/1 (2).jpg' %}" class="d-block w-100" alt="...">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5 class="h1"> مبادرة الشركات الناشئة</h5>
+                            <h1>ابدأ مشروعك الجديد</h1>
+                            <h6 class="lead">تنظيم تظاهرة جيل الرقمنة الرقمنة
+                                الجزائري حول المؤسسات الناشنئة
+                                والإقتصاد الرقمي يومي 16 و 18 أبريل 2020
+                            </h6>
+                            <a href="#" class="btn-2">انضم معنا</a>
+                        </div>
+                    </div>
+                    <div class="carousel-item carousel-three">
+                        <div class="ovarlay"></div>
+                        <img src="{% static 'blog/images/1 (6).jpg' %}" class="d-block w-100" alt="...">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5 class="h1"> مبادرة الشركات الناشئة</h5>
+                            <h1>ابدأ مشروعك الجديد</h1>
+                            <h6 class="lead">تنظيم تظاهرة جيل الرقمنة الرقمنة
+                                الجزائري حول المؤسسات الناشنئة
+                                والإقتصاد الرقمي يومي 16 و 18 أبريل 2020
+                            </h6>
+                            <a href="#" class="btn-2">انضم معنا</a>
+                        </div>
+                    </div>
+                </div>
+
+                <a class="carousel-control-prev prev" href="#main-slider" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next prev" href="#main-slider" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div> -->
+        <!-- =========================
+           end carosel
+    ========================= -->
+        <!-- sssss -->
+        <section class="home position-relative">
+            <!-- start home_content -->
+            <div class="home_content w-100">
+                <div id="home_slider" class="carousel slide" data-ride="carousel">
+
+                    <!-- start carousel-inner -->
+                    <div class="carousel-inner h-80">
+
+                        <!-- start carousel-item -->
+                        <div class="carousel-item h-80 active">
+                            <!-- start carousel_bottom_overlay -->
+                            <div class="carousel_bottom_overlay position-absolute w-100 h-80"></div>
+                            <!-- start carousel_item_inner -->
+                            <div class="carousel_item_inner position-relative h-80">
+                                <div class="container">
+                                    <div class="row">
+                                        <!-- start left_part -->
+                                        <div class="col-sm-7 col-lg-8 ordering">
+                                            <div class="left_part w-100">
+                                                <!-- right -->
+                                                <div class="left_part_head  text-lg-right">
+                                                    <h2 class="h1 m-0 text-uppercase">
+                                                        <span class="precent_effect position-relative">
+                                                            startup
+                                                            <span class="position-absolute"></span>
+                                                            <span class="position-absolute"></span>
+                                                            <span class="position-absolute"></span>
+                                                            <span class="position-absolute"></span>
+                                                        </span><br><br>
+                                                    </h2>
+                                                </div>
+                                                <!-- right -->
+                                                <!-- left_part_head -->
+                                                <div class="left_part_head text-center text-sm-left">
+                                                    <h2 class="h1 m-0 text-uppercase">
+                                                        save <span class="precent_effect position-relative">
+                                                            your time
+                                                            <span class="position-absolute"></span>
+                                                            <span class="position-absolute"></span>
+                                                            <span class="position-absolute"></span>
+                                                            <span class="position-absolute"></span>
+                                                        </span><br>
+                                                        <b>ابدأ مشروعك</b>
+                                                    </h2>
+                                                </div>
+                                                <!-- left_part_body -->
+                                                <div class="left_part_body text-center">
+                                                    <h2 class="font-weight-bolder">الان</h2>
+                                                    <p class="text-uppercase">العمل الحر <span>المستقل</span></p>
+                                                    <div class="buy d-flex justify-content-center align-items-center">
+                                                        <div class="icon">
+                                                            <i class="fas fa-shopping-basket"></i>
+                                                        </div>
+                                                        <h3 class="font-weight-bold text-uppercase m-0">
+                                                            انضـــم الينـــا<small
+                                                                class="text-left d-block">@ِِAlgo</small>
+                                                        </h3>
+                                                    </div>
+                                                    <div class="empty_for_wavy"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- **** end left_part -->
+
+                                        <!-- start right_part -->
+                                        <div class="col-sm-5 col-lg-4 d-flex align-items-center justify-content-center">
+                                            <div class="right_part">
+                                                <div class="img">
+                                                    <img src="{% static 'blog/img_carsol/clock_home.png' %}" alt="clock"
+                                                        class="img-fluid">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- **** end right_part -->
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- **** end carousel_item_inner -->
+                        </div>
+                        <!-- **** end carousel-item -->
+
+                        <!-- start carousel-item -->
+                        <div class="carousel-item h-100">
+                            <!-- start carousel_bottom_overlay -->
+                            <div class="carousel_bottom_overlay position-absolute w-100 h-80"></div>
+                            <!-- start carousel_item_inner -->
+                            <div class="carousel_item_inner carousel_item_inner_other position-relative h-80">
+                                <div class="container">
+                                    <div class="row">
+                                        <!-- start left_part -->
+                                        <div class="col-sm-7 col-lg-8 ordering">
+                                            <div class="left_part w-100">
+                                                <!-- right -->
+                                                <div class="left_part_head  text-lg-right">
+                                                    <h2 class="h1 m-0 text-uppercase">
+                                                        <span class="precent_effect position-relative">
+                                                            startup
+                                                            <span class="position-absolute"></span>
+                                                            <span class="position-absolute"></span>
+                                                            <span class="position-absolute"></span>
+                                                            <span class="position-absolute"></span>
+                                                        </span><br><br>
+                                                    </h2>
+                                                </div>
+                                                <!-- right -->
+
+                                                <!-- left_part_head -->
+                                                <div class="left_part_head text-center text-sm-left">
+                                                    <h2 class="h1 m-0 text-uppercase">
+                                                        save <span class="precent_effect position-relative">
+                                                            your time
+                                                            <span class="position-absolute"></span>
+                                                            <span class="position-absolute"></span>
+                                                            <span class="position-absolute"></span>
+                                                            <span class="position-absolute"></span>
+                                                        </span><br>
+                                                        <b>نمي وعيك</b>
+                                                    </h2>
+                                                </div>
+                                                <!-- left_part_body -->
+                                                <div class="left_part_body text-center">
+                                                    <h2 class="font-weight-bolder">ثم انطلق</h2>
+                                                    <p class="text-uppercase">العمل الحر <span>المستقل</span></p>
+                                                    <div class="buy d-flex justify-content-center align-items-center">
+                                                        <div class="icon">
+                                                            <i class="fas fa-shopping-basket"></i>
+                                                        </div>
+                                                        <h3 class="font-weight-bold text-uppercase m-0">
+                                                            انضــم اليــنا<small class="text-left d-block">@Algo</small>
+                                                        </h3>
+                                                    </div>
+                                                    <div class="empty_for_wavy"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- **** end left_part -->
+
+                                        <!-- start right_part -->
+                                        <div class="col-sm-5 col-lg-4 d-flex align-items-center justify-content-center">
+                                            <div class="right_part">
+                                                <div class="img">
+                                                    <img src="{% static 'blog/img_carsol/rocket.png' %}" alt="clock"
+                                                        class="img-fluid">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- **** end right_part -->
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- **** end carousel_item_inner -->
+                        </div>
+                        <!-- **** end carousel-item -->
+
+                    </div>
+                    <!-- **** end carousel-inner -->
+
+                    <div class="wavy__bg">
+                        <img src="{% static 'blog/img_carsol/main_wavy.png' %}" alt="wavy" class="img-fluid">
+                    </div>
+
+                </div>
+            </div>
+            <!-- **** end home_content -->
+        </section>
+        <!-- sssss -->
+        <!-- =====================
+            end header
+     ====================== -->
+
+
+        <!-- =====================
+            start cart
+     ====================== -->
+        <section class="card1">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="cart">
+                            <iframe class="vedio" width="100%" height="400"
+                                src="https://www.youtube.com/embed/yIlRBBeEGFk" frameborder="0" allow="accelerometer;
+                autoplay; encrypted-media; gyroscope;
+                picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="cart1">
+                            <p>تنظيم تظاهرة جيل الرقمنة الرقمنة الجزائري حول
+                                المؤسسات الناشنئة
+                                والإقتصاد الرقمي يومي 16 و 18 أفريل 2020 بمبادرة
+                            </p>
+                        </div>
+                    </div>
+                </div>
+        </section>
+        <section class="card1">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="cart1">
+                            <p>تنظيم تظاهرة جيل الرقمنة الرقمنة الجزائري حول
+                                المؤسسات الناشنئة
+                                والإقتصاد الرقمي يومي 16 و 18 أفريل 2020
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="cart">
+                            <img src="{% static 'blog/images/1 (3).jpg' %}" class="img-fluid img-thumbnail" alt="...">
+                        </div>
+                    </div>
+                </div>
+        </section>
+
+        <section class="card1">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="cart">
+                            <img src="{% static 'blog/images/1 (5).jpg' %}" class="img-fluid img-thumbnail" alt="...">
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="cart1">
+                            <p>تنظيم تظاهرة جيل الرقمنة الرقمنة الجزائري حول
+                                المؤسسات الناشنئة
+                                والإقتصاد الرقمي يومي 16 و 18 أفريل 2020 بمبادرة
+                            </p>
+                        </div>
+                    </div>
+                </div>
+        </section>
+        <section class="card1">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="cart1">
+                            <p>تنظيم تظاهرة جيل الرقمنة الرقمنة الجزائري حول
+                                المؤسسات الناشنئة
+                                والإقتصاد الرقمي يومي 16 و 18 أفريل 2020 بمبادرة
+                                من المؤسسة الناشئة "قيديني" للتجارة الإلكترkمية
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="cart">
+                            <img src="{% static 'blog/images/1 (4).jpg' %}" class="img-fluid img-thumbnail" alt="...">
+                        </div>
+                    </div>
+                </div>
+        </section>
+
+        <section class="card1">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="cart">
+                            <img src="{% static 'blog/images/1 (2).jpg' %}" class="img-fluid img-thumbnail" alt="...">
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="cart1">
+                            <p>تنظيم تظاهرة جيل الرقمنة الرقمنة الجزائري حول
+                                المؤسسات الناشنئة
+                                والإقتصاد الرقمي يومي 16 و 18 أفريل 2020 بمبادرة
+                                من المؤسسة الناشئة "قيديني" للتجارة الإلكترkمية
+                            </p>
+                        </div>
+                    </div>
+                </div>
+        </section>
+
+        <section class="card1">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="cart1">
+                            <p>تنظيم تظاهرة جيل الرقمنة الرقمنة الجزائري حول
+                                المؤسسات الناشنئة
+                                والإقتصاد الرقمي يومي 16 و 18 أفريل 2020 بمبادرة
+                                من المؤسسة الناشئة "قيديني" للتجارة الإلكترkمية
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="cart">
+                            <img src="{% static 'blog/images/1 (6).jpg' %}" class="img-fluid img-thumbnail" alt="...">
+                        </div>
+                    </div>
+                </div>
+        </section>
+
+        <!-- =====================
+            end card
+     ====================== -->
+
+
+
+
+
+        <!-- =====================
+           start footer
+     ====================== -->
+
+        <section class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-2">
+                        <h2>TOP LOCATION</h2>
+                        <h6>Lorem ipsum dolor</h6>
+                        <h6>Sit amet consectetur</h6>
+                        <h6>Adipisicing elit</h6>
+                        <h6>Eiusmod tempor</h6>
+                        <h6>Incididunt ut labore</h6>
+                    </div>
+                    <div class="col-sm-2">
+                        <h2>FEATURED BOATS</h2>
+                        <h6>Lorem ipsum dolor</h6>
+                        <h6>Sit amet consectetur</h6>
+                        <h6>Adipisicing elit</h6>
+                        <h6>Eiusmod tempor</h6>
+                    </div>
+                    <div class="col-lg-6">
+                        <h2>SUBSCRIBE TO OUR NEWSLETTER</h2>
+                        <!-- <div  class="serch">
+              <div class="serches input-group show mb-3">
+                <input id="myinpu" type="text" class="form-control" placeholder="your email adress"
+                  aria-label="Recipient's username" aria-describedby="basic-addon2">
+                <span class="input-group-text btn-1" id="basic-addon2">subscript</span>
+              </div>
+            </div> -->
+                        <div class='sochial'>
+                            <i class='fab fa-facebook-f'></i>
+                            <i class='fab fa-twitter'></i>
+                            <i class='fab fa-google-plus-g'></i>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <h2>CONTACT US</h2>
+                        <h6>103, Lorem ipsum,</h6>
+                        <h6>Sit amet consectetur</h6>
+                        <h6>Adipisicing elit</h6>
+                        <h6>3823660,</h6>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <p class="lead"> ALEXCODE <span>.pro</span></p>
+
+                        </div>
+                    </div>
+                </div>
+        </section>
+
+
+
+
+        <!-- end section -->
+
+        <!-- =====================
+           end footer
+     ====================== -->
+
+
+
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+        <!-- <script src="{% static 'blog/js/jquery-3.3.1.slim.min.js' %}"></script>
+<script src="{% static 'blog/js/popper.min.js' %}"></script> -->
+        <script src="{% static 'blog/js/fontawesome-all.min.js' %}"></script>
+        <!-- swiper => slider -->
+        <!-- js file -->
+        <script src="{% static 'blog/js/stat.js' %}"></script>
+        <script src="{% static 'blog/js/bootstrap.js' %}"></script>
+        <script src="{% static 'blog/js/swiper.min.js' %}"></script>
+        <script src="{% static 'blog/js/main.js' %}"></script>
+
+
+        <!-- <script>
+            //hideen navbar& showdefrintnavbar in 500px scroll
+            var prevScrollpos = window.pageYOffset;
+            window.onscroll = function () {
+                var currentScrollPos = window.pageYOffset;
+                if (prevScrollpos > currentScrollPos) {
+                    document.getElementById("navbar").style.top = "0";
+                    document.getElementById("navbar").style.background = "";
+                    document.getElementById("navbar").style.position = 'static'
+
+                } else {
+                    document.getElementById("navbar").style.top = "0";
+                    document.getElementById("navbar").style.background = " rgba(1, 1, 1, 0.8)";
+                    document.getElementById("navbar").style.position = 'fixed';
+
+                }
+                prevScrollpos = currentScrollPos;
+            }
+
+        </script> -->
+
+
+
+        <script>
+            $(document).scroll(function () {
+                console.log("---------------------------")
+                if (window.scrollY > 50) {
+                    $('#img').hide(1000);
+                } 1000;
+                if (window.scrollY < 20) {
+                    $('#img').show(1000);
+                } 1000;
+
+            });
+
+        </script>
+
+</body>
+
+</html>

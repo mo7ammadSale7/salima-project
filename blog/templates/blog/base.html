@@ -1,0 +1,602 @@
+{% load static %}
+{% load post_tag %}
+<!DOCTYPE html>
+
+<html lang="ar">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="icon/fontawesome-free-5.13.1-web/css/all.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet" />
+    {% if title %}
+    <title>مدونة | {{title}}</title>
+    {% else %}
+    <title>مدونة</title>
+    {% endif %}
+    <link rel="stylesheet" href="{% static 'blog/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/css/main.css' %}">
+    <link rel="shortcut icon" href="{% static 'blog/images/favicon.ico' %}">
+
+    <script src="{% static 'blog/js/jquery-1.11.1.js' %}"></script>
+    <script src="{% static 'blog/js/jquery.validate.js' %}"></script>
+    <script src="{% static 'blog/js/messages_ar.js' %}"></script>
+    <!-- <script src="{% static 'blog/js/bootstrap-validate.js' %}"></script> -->
+
+    <style>
+        /*  */
+        .cmxform fieldset p label span.error {
+            color: red;
+        }
+
+        dl,
+        ol,
+        ul,
+        .errorlist {
+            margin-top: 0;
+            margin-bottom: 1rem;
+            color: red;
+            font-style: italic;
+            list-style: none;
+        }
+
+        form.cmxform {
+            width: 1000px;
+        }
+
+        form.cmxform label {
+            width: auto;
+            display: block;
+            float: none;
+        }
+
+        /*  */
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body,
+        html {
+            font-family: "Cairo", sans-serif;
+            background-color: #f0f5f8;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        p {
+            margin-bottom: 40px;
+            width: fit-content;
+            font-size: 20px;
+            color: black;
+        }
+
+        @media (print),
+        (prefers-reduced-motion: reduce) {
+            .animated {
+                -webkit-animation-duration: 1ms !important;
+                animation-duration: 1ms !important;
+                -webkit-transition-duration: 1ms !important;
+                transition-duration: 1ms !important;
+                -webkit-animation-iteration-count: 1 !important;
+                animation-iteration-count: 1 !important;
+            }
+        }
+
+        .btn-1 {
+            background-color: #384ceb;
+            cursor: pointer;
+            color: #ffffff;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 2px 2px rgba(0, 0, 0, 0.15), 0 4px 4px rgba(0, 0, 0, 0.15), 0 8px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-2 {
+            color: #ffffff;
+            padding: 10px 45px !important;
+            border: 1px solid #ffffff;
+            transition: 1s;
+            background-color: #384ceb;
+            border-radius: 20px;
+            z-index: 1000;
+            opacity: 1;
+            position: absolute;
+            top: 85%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .btn-2:hover {
+            color: #384ceb;
+            background: transparent;
+            border: none;
+            color: #ffffff;
+        }
+
+        .animation,
+        .card1 img:hover {
+            animation: shake 0.5s;
+            animation-iteration-count: infinite;
+        }
+
+        @keyframes shake {
+            0% {
+                transform: translate(1px, 1px) rotate(0deg);
+            }
+
+            10% {
+                transform: translate(-1px, -2px) rotate(-1deg);
+            }
+
+            20% {
+                transform: translate(-3px, 0px) rotate(1deg);
+            }
+
+            30% {
+                transform: translate(3px, 2px) rotate(0deg);
+            }
+
+            40% {
+                transform: translate(1px, -1px) rotate(1deg);
+            }
+
+            50% {
+                transform: translate(-1px, 2px) rotate(-1deg);
+            }
+
+            60% {
+                transform: translate(-3px, 1px) rotate(0deg);
+            }
+
+            70% {
+                transform: translate(3px, 1px) rotate(-1deg);
+            }
+
+            80% {
+                transform: translate(-1px, -1px) rotate(1deg);
+            }
+
+            90% {
+                transform: translate(1px, 2px) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(1px, -2px) rotate(-1deg);
+            }
+        }
+
+        .glass {
+            position: absolute;
+            border: 3px solid #000;
+            border-radius: 50%;
+            cursor: none;
+            /*Set the size of the magnifier glass:*/
+            width: 100px;
+            height: 100px;
+        }
+
+        .slider {
+            margin-top: 70px;
+        }
+
+        .navbar {
+
+            background: #384ceb;
+            /* position: fixed; */
+            direction: rtl !important;
+            width: 100%;
+            border-bottom: 1px solid #ffffff;
+            z-index: 1000;
+        }
+
+        .navbar:hover {
+            background: #c2dce9;
+            transition: 1s;
+        }
+
+        .navbar .dropdown-menu {
+            background-color: #384ceb;
+            transition: 1s ease-in-out;
+        }
+
+        .navbar .dropdown-menu:hover {
+            background: #c2dce9;
+        }
+
+        .navbar .dropdown-menu .dropdown-item {
+            color: #ffffff;
+        }
+
+        .navbar .dropdown-menu .dropdown-item:hover {
+            background: transparent;
+            transition: 1s ease-in-out;
+            color: #384ceb;
+        }
+
+        .navbar .navbar-collapse {
+            align-items: center;
+            width: auto;
+        }
+
+        .navbar .navbar-toggler {
+            background-color: #ffffff;
+            border: 1px solid #384ceb;
+            box-shadow: inset;
+            outline: none !important;
+            box-shadow: none;
+        }
+
+        .navbar .navbar-toggler .icon {
+            color: #384ceb;
+        }
+
+        .navbar .navbar-nav .nav-link {
+            color: #ffffff;
+            transition: 1s ease-in-out;
+            font-weight: 400;
+            text-align: right;
+        }
+
+        .navbar .navbar-nav .nav-link:hover {
+            color: #384ceb;
+        }
+
+        .card1 {
+            padding: 100px 0;
+            text-align: center;
+            background-color: #f0f5f8;
+            transition: 0.8s;
+            box-shadow: 0px 3px 20px #c2dce9;
+        }
+
+        .card1 img {
+            border-radius: 15px;
+            transition: 0.8s;
+        }
+
+        .border {
+            border: 1px solid #dee2e6 !important;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 2px 2px rgba(0, 0, 0, 0.15), 0 4px 4px rgba(0, 0, 0, 0.15), 0 8px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .card {
+            position: relative;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            min-width: 0;
+            word-wrap: break-word;
+            background-color: #fff;
+            background-clip: border-box;
+            border: 1px solid rgba(0, 0, 0, .125);
+            border-radius: .25rem;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 2px 2px rgba(0, 0, 0, 0.15), 0 4px 4px rgba(0, 0, 0, 0.15), 0 8px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        p {
+            margin-bottom: 40px;
+            width: fit-content;
+            font-size: 20px;
+        }
+
+        .cart,
+        .cart1 {
+            position: relative;
+            display: none;
+            transition: 1s;
+            box-shadow: 0px 3px 20px #c2dce9;
+            height: 100%;
+            border-radius: 15px;
+        }
+
+        .cart:hover,
+        .cart1:hover {
+            transform: scale(0.9);
+        }
+
+        .footer {
+            text-align: right;
+            background: #c2dce9;
+            color: #384ceb;
+            border-top: 8px solid #384ceb;
+            text-align: center;
+            padding: 100px 0;
+        }
+
+        @media (max-width: 768px) {
+            .footer {
+                text-align: left;
+            }
+        }
+
+        .footer #myinpu {
+            outline: none;
+            box-shadow: none;
+        }
+
+        .footer h2 {
+            width: 100%;
+            font-size: 15px;
+            font-weight: bold;
+            margin-left: 5px;
+            margin-top: 20px;
+            color: #384ceb;
+        }
+
+        .footer h6 {
+            font-size: 14px;
+            margin-top: 15px;
+            text-align: left;
+            cursor: pointer;
+            margin-top: 20px;
+            color: #384ceb;
+            transition-duration: 1s;
+        }
+
+        .footer h6:hover {
+            color: #384ceb;
+        }
+
+        .footer .sochial {
+            margin-top: 30px;
+        }
+
+        .footer .sochial .fab {
+            background: #f0f5f8;
+            color: #384ceb;
+            padding: 18px;
+            border-radius: 50%;
+            margin: 10px;
+            transition: 1s ease-in-out;
+        }
+
+        .footer .sochial .fab:hover {
+            background: #ffffff;
+            color: #384ceb;
+            border: 1px solid #384ceb;
+            transform: rotateY(180deg);
+        }
+
+        .footer p {
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .footer p span:hover {
+            color: #384ceb;
+            transition-duration: 1s;
+        }
+
+        @media (print),
+        (prefers-reduced-motion: reduce) {
+            .animated {
+                -webkit-animation-duration: 1ms !important;
+                animation-duration: 1ms !important;
+                -webkit-transition-duration: 1ms !important;
+                transition-duration: 1ms !important;
+                -webkit-animation-iteration-count: 1 !important;
+                animation-iteration-count: 1 !important;
+            }
+        }
+
+        .text .btn {
+            position: fixed;
+            bottom: 10px;
+            right: -10px;
+            display: none;
+            color: #384ceb;
+            border: 0;
+        }
+
+        .text i {
+            text-align: center;
+            line-height: 50px;
+            text-align: center;
+            z-index: 1;
+            font-size: 70px;
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+    <header>
+        <!--Start Navbar-->
+        <nav class="navbar navbar-expand-lg  text-uppercase">
+            <div class="container">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="icon"><i class="fas fa-bars"></i></span>
+                </button>
+
+                <div class="collapse navbar-collapse justify-content-start" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-item nav-link active" href="{% url 'home' %}">الرئيسية <span
+                                class="sr-only">(current)</span>
+                        </a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                التصنيفات
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                {% for category in category_list %}
+                                <a class="dropdown-item" href="/category/{{category.name}}">
+                                    {{category.name}}
+                                </a>
+                                {% endfor %}
+                            </div>
+                        </li>
+                        <!-- الجداول -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                انضم الينا
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                                <a class="dropdown-item" href="{% url 'formmV' %}">
+                                    الشركات الناشئة / الصغيرة
+                                </a>
+                                <a class="dropdown-item" href="{% url 'multilistformmV' %}">
+                                    فكره مشروع مبتكر
+                                </a>
+                                <a class="dropdown-item" href="{% url 'multilistformmBr' %}">
+                                    حاضنات الاعمال
+                                </a>
+
+                            </div>
+                        </li>
+                        <!-- الجداول -->
+
+
+                        <a class="nav-item nav-link" href="{% url 'adminapp' %}">الأدمن</a>
+
+
+                    </div>
+                </div>
+
+                <div class="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup">
+                    {% if user.is_authenticated %}
+                    <div class="navbar-nav">
+                        <a class="nav-item nav-link" href="{% url 'new_post' %}">تدوينة جديدة</a>
+                        <a class="nav-item nav-link" href="{% url 'allposts' %}"> جميــع الموضوعات</a>
+                        <a class="nav-item nav-link" href="{% url 'profile' %}">الملف الشخصي</a>
+                        <a class="nav-item nav-link" href="{% url 'logout' %}">تسجيل خروج</a>
+                        {% else %}
+                        <a class="nav-item nav-link" href="{% url 'login' %}">تسجيل دخول</a>
+                        <a class="nav-item nav-link" href="{% url 'register' %}">تسجيل</a>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="navbar-brand" href="#"><img class="img-fluid"
+                                src="{% static 'blog/images/alger.png' %}" width="70px" height="50px" alt="logo"></a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!--End Navbar-->
+    </header>
+
+    <section>
+        <div class="container">
+            <div class="row mt-4">
+                <div class="col-md-9">
+                    <div class="row text-center">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                {% if messages %}
+                                {% for message in messages %}
+                                <div class="alert alert-{{message.tags}}">
+                                    {{message}}
+                                </div>
+                                {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% block content %}
+
+                    {% endblock content %}
+                </div>
+                <div class="col-md-3">
+                    <div class="card mb-3">
+                        <h3 class="text-center btn-1 text-light p-2">آخر التدوينات</h3>
+                        {% latest_posts %}
+
+                    </div>
+                    <div class="card mb-3">
+                        <h3 class="text-center btn-1 text-light p-2">آخر التعليقات</h3>
+                        {% latest_comments %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =====================
+           start footer
+     ====================== -->
+
+    <section class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-2">
+                    <h2>TOP LOCATION</h2>
+                    <h6>Lorem ipsum dolor</h6>
+                    <h6>Sit amet consectetur</h6>
+                    <h6>Adipisicing elit</h6>
+                    <h6>Eiusmod tempor</h6>
+                    <h6>Incididunt ut labore</h6>
+                </div>
+                <div class="col-sm-2">
+                    <h2>FEATURED BOATS</h2>
+                    <h6>Lorem ipsum dolor</h6>
+                    <h6>Sit amet consectetur</h6>
+                    <h6>Adipisicing elit</h6>
+                    <h6>Eiusmod tempor</h6>
+                </div>
+                <div class="col-lg-6">
+                    <h2>SUBSCRIBE TO OUR NEWSLETTER</h2>
+                    <!-- <div  class="serch">
+          <div class="serches input-group show mb-3">
+            <input id="myinpu" type="text" class="form-control" placeholder="your email adress"
+              aria-label="Recipient's username" aria-describedby="basic-addon2">
+            <span class="input-group-text btn-1" id="basic-addon2">subscript</span>
+          </div>
+        </div> -->
+                    <div class='sochial'>
+                        <i class='fab fa-facebook-f'></i>
+                        <i class='fab fa-twitter'></i>
+                        <i class='fab fa-google-plus-g'></i>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <h2>CONTACT US</h2>
+                    <h6>103, Lorem ipsum,</h6>
+                    <h6>Sit amet consectetur</h6>
+                    <h6>Adipisicing elit</h6>
+                    <h6>3823660,</h6>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <p class="lead"> ALEXCODE <span>.pro</span></p>
+
+                    </div>
+                </div>
+            </div>
+    </section>
+
+
+
+
+    <!-- end section -->
+
+    <!-- =====================
+       end footer
+ ====================== -->
+
+
+    <script src="{% static 'blog/js/jquery-3.3.1.slim.min.js' %}"></script>
+    <script src="{% static 'blog/js/popper.min.js' %}"></script>
+    <script src="{% static 'blog/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'blog/js/fontawesome-all.min.js' %}"></script>
+
+    <script>
+        $('#formmV').validate();
+    </script>
+
+</body>
+
+</html>

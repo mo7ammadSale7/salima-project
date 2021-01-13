@@ -1,0 +1,39 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<h1 class="page-header">Books</h1>
+<button class="btn btn-primary show-form" data-url="#">
+    <span class="glyphicon glyphicon-plus"></span>
+    New Book
+</button>
+<table class="table" id="book-table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>companyName</th>
+            <th>creationDate</th>
+            <th>status</th>
+            <th>associatesNumber</th>
+            <th>employeesNumber</th>
+            <th>createdJobsNumber</th>
+            <th>fullAddress</th>
+            <th>wlaya</th>
+            <th>ownersEmail</th>
+            <th>ownersLinkedin</th>
+            <th>contactEmail</th>
+            <th>mobilePhoneNumber</th>
+            <th>mainPhoneNumber</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% include "blog/app_list_2.html" %}
+    </tbody>
+</table>
+
+<div class="modal fade" id="modal-book">
+    <div class="modal-dialog">
+        <div class="modal-content"></div>
+    </div>
+</div>
+{% endblock %}
