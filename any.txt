@@ -1,0 +1,12 @@
+/home/Salima/.virtualenvs/venv/
+
+echo "export DJANGO_SETTINGS_MODULE='my_blog.prod_settings'" >> .env
+echo "export SECRET_KEY='&g(sa$3c%ls#ru9l$k5&eu-b_%+(ptn87qpu=7ucll5kn!5$ns'" >> .env
+echo "export DEBUG='true'" >> .env
+
+
+echo "export DATABASE_URL='postgres://USER:PASSWORD@LINK:PORT/DBNAME'" >> .env
+
+set -a; source /home/Salima/salima-project/.env; set +a
+
+echo 'set -a; source /home/Salima/salima-project/.env; set +a' >> ~/.virtualenvs/venv/bin/postactivate
