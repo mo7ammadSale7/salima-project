@@ -11,7 +11,7 @@ if debug_option == 'true':
 else:
     DEBUG = False
 
-ALLOWED_HOSTS = ['salima.pythonanywhere.com']
+ALLOWED_HOSTS = ['salima92.pythonanywhere.com']
 
 
 DATABASES = {
